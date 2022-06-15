@@ -1,0 +1,65 @@
+  public static void main(String[] args) throws NumberFormatException, IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    String[] st = br.readLine().split(" ");
+    int n = Integer.parseInt(st[0]);
+    int m = Integer.parseInt(st[1]);
+
+    int[][] arr = new int[n][m];
+
+    for (int i = 0; i < n; i++) {
+      st = br.readLine().split(" ");
+      for (int j = 0; j < m; j++) {
+        arr[i][j] = Integer.parseInt(st[j]);
+      }
+    }
+
+    System.out.println(numDistinctIslands(arr));
+
+  }
+
+  public static StringBuilder psf = new StringBuilder();
+
+  public static int numDistinctIslands(int[][] arr) {
+    
+    HashSet<String> ans=new HashSet<>();
+    boolean [][]vis=new boolean[arr.length][arr[0].length];
+    
+    for(int i=0;i<arr.length;i++){
+        for(int j=0;j<arr[0].length;j++){
+            if(vis[i][j]==false && arr[i][j]==1){
+                psf=new StringBuilder();
+                traversal(arr,vis,i,j);
+                ans.add(psf.toString());
+            }
+        }
+    }
+    return ans.size();
+    
+  }
+  public static void traversal(int[][]arr,boolean[][]vis,int r,int c){
+    vis[r][c]=true;
+    //top
+    if(r-1>=0 && vis[r-1][c]==false && arr[r][c]==1 ){
+        psf.append("N");
+        traversal(arr,vis,r-1,c);
+    }
+    //bottom
+       if(r+1<arr.length && vis[r+1][c]==false && arr[r+1][c]==1){
+           psf.append("S");
+           traversal(arr,vis,r+1,c);
+       }
+       //right
+       if(c +1<arr[0].length && vis[r][c+1]==false && arr[r][c+1]==1){
+           psf.append("R");
+           traversal(arr,vis,r,c+1);
+       }
+       //left
+       if(c-1>=0 && vis[r][c-1]==false && arr[r][c-1]==1){
+           psf.append("L");
+           traversal(arr,vis,r,c-1);
+       }
+       psf.append("B");
+      
+      
+  }
