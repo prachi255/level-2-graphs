@@ -1,0 +1,61 @@
+   public class pair{
+        int bus;
+        int count;
+        pair(int b,int c){
+            this.bus=b;
+            this.count=c;
+        }
+    }
+    public int numBusesToDestination(int[][] routes, int source, int target) {
+        if(source==target){
+            return 0;
+        }
+        
+        //making hasmap bus stop->buses
+        HashMap<Integer,HashSet<Integer>>map=new HashMap<>();
+        for(int i=0;i<routes.length;i++){
+            for(int j=0;j<routes[i].length;j++){
+                int bus=i;
+                int route=routes[i][j];
+                if(map.containsKey(route)==false){
+                   // map.get(route).add(bus);
+                     map.put(route,new HashSet<>());
+                }
+ map.get(route).add(bus);
+                
+            }
+        }
+        ArrayDeque<pair> q=new ArrayDeque<>();
+        
+      //  HashSet curr=map.get(source);
+       // Iterator itr=curr.iterator();
+        
+        boolean []vis=new boolean[routes.length];
+      
+        for(int z:map.get(source)){
+           q.add(new pair(z,1)); 
+           // Ststem.out.println(z);
+        }
+        while(q.size()>0){
+            pair cur=q.remove();
+            if(vis[cur.bus]==true){
+                continue;
+            }
+            vis[cur.bus]=true;
+            
+            for(int stop:routes[cur.bus]){
+                if(stop==target){
+                    return cur.count;
+                }
+                for(var e:map.get(stop)){
+                    if(vis[e]==false){
+                       // vis[e]=true;
+                        q.add(new pair(e,cur.count+1));
+                        
+                    }
+                }
+            }
+        }
+        
+    return -1;
+    }
