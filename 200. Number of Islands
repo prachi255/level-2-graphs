@@ -1,0 +1,29 @@
+    public int numIslands(char[][] arr) {
+
+        int ans=0;
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j<arr[0].length;j++){
+                if(arr[i][j]=='1'){
+                    dfs(i,j,arr);
+                    ans++;
+                }
+            }
+        }
+        return ans;
+     }
+    
+    public static int[][]dir={{-1,0},{1,0},{0,-1},{0,1}}; 
+  public static void dfs(int i,int j,char[][]arr){
+
+      
+      arr[i][j]='0';
+      for(int r=0;r<4;r++){
+          int nr=i+dir[r][0];
+          int nc=j+dir[r][1];
+          
+          if(nr>=0 && nc>=0 && nc<arr[0].length && nr<arr.length && arr[nr][nc]=='1'){
+              dfs(nr,nc,arr);
+          }
+      }
+
+}
