@@ -1,0 +1,57 @@
+ class pair{
+        int r;
+        int c;
+        int d;
+        pair(int r,int c,int d){
+            this.r=r;
+            this.c=c;
+            this.d=d;
+        }
+    }
+    public int maxDistance(int[][] grid) {
+        boolean [][]vis=new boolean[grid.length][grid[0].length];
+        int ans=Integer.MIN_VALUE;
+        ArrayDeque<pair> q=new ArrayDeque<>();
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    q.add(new pair(i,j,0));
+                }
+            }
+        }
+        
+         while(q.size()>0){
+            pair curr=q.remove();
+          //  System.out.println(curr.r+" "+curr.c+" "+curr.x);
+            if(vis[curr.r][curr.c]==true){
+                continue;
+            }
+         else{
+                vis[curr.r][curr.c]=true;
+               //rr.r][curr.c]=curr.x;
+             ans=Math.max(ans,curr.d);
+            
+                
+                //putting 4 directions
+                if(curr.r+1<grid.length && vis[curr.r+1][curr.c]==false){
+                q.add(new pair(curr.r+1,curr.c,curr.d+1));
+                }
+                if(curr.r-1>=0 && vis[curr.r-1][curr.c]==false){
+                     q.add(new pair(curr.r-1,curr.c,curr.d+1)); 
+                }
+                 if(curr.c-1>=0 && vis[curr.r][curr.c-1]==false){
+                     q.add(new pair(curr.r,curr.c-1,curr.d+1)); 
+                }
+                 if(curr.c+1<grid[0].length && vis[curr.r][curr.c+1]==false){
+                     q.add(new pair(curr.r,curr.c+1,curr.d+1)); 
+                }
+                
+           
+    }
+        }
+       if(ans==Integer.MIN_VALUE || ans==0){
+            return -1;
+        }
+        return ans;
+        
+    }
