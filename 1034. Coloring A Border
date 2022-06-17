@@ -1,0 +1,53 @@
+  class pair{
+        int r;
+        int c;
+        pair(int r,int c){
+            this.r=r;
+            this.c=c;
+        }
+    }
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+        boolean [][]vis=new boolean[grid.length][grid[0].length];
+       
+        ArrayList<pair> a=new ArrayList();
+
+        dfs(grid,row,col,color,grid[row][col],vis,a);
+        for(pair p:a){
+            grid[p.r][p.c]=color;
+        }
+        
+        return grid;
+        
+        
+    }
+    
+    public void dfs(int[][]grid,int r,int c,int clr,int oclr,boolean[][]vis,ArrayList<pair> a){
+    
+        if(r>=grid.length || c>=grid[0].length || r<0 || c<0 || vis[r][c]==true || grid[r][c]!=oclr){
+            return;
+        }
+     
+        
+        vis[r][c]=true;
+
+        if(isBorder(r,c,grid,oclr)==true){
+            a.add(new pair(r,c));
+        }
+        
+        dfs(grid,r+1,c,clr,oclr,vis,a);
+        dfs(grid,r-1,c,clr,oclr,vis,a);
+        dfs(grid,r,c+1,clr,oclr,vis,a);
+        dfs(grid,r,c-1,clr,oclr,vis,a);
+    }
+    public boolean isBorder(int r,int c,int[][] grid,int oclr){
+                if(r==0 || r==grid.length-1 || c==0 || c==grid[0].length-1){
+           return true;
+        }
+        
+        else if(grid[r-1][c]!=oclr || grid[r+1][c]!=oclr || grid[r][c+1]!=oclr || grid[r][c-1]!=oclr){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
