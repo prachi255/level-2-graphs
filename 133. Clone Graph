@@ -1,0 +1,26 @@
+ public Node cloneGraph(Node node) {
+        if(node==null){
+            return null;
+        }
+        HashMap<Integer,Node> vis=new HashMap<>();
+        return helper(vis,node);
+    }
+    public Node helper(HashMap<Integer,Node> vis,Node node){
+        Node cloneNode=new Node(node.val);
+        vis.put(node.val,cloneNode);
+        
+        for(Node nbr:node.neighbors){
+            if(vis.containsKey(nbr.val)==true){
+                Node nbrClone=vis.get(nbr.val);
+                cloneNode.neighbors.add(nbrClone);
+            }
+            else{
+                Node nbrClone=helper(vis,nbr);
+                cloneNode.neighbors.add(nbrClone);
+            }
+            
+         
+            
+        }
+           return cloneNode;
+    }
