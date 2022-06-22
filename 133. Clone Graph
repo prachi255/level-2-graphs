@@ -1,17 +1,20 @@
- public Node cloneGraph(Node node) {
+  public Node cloneGraph(Node node) {
         if(node==null){
             return null;
         }
-        HashMap<Integer,Node> vis=new HashMap<>();
+     //  HashMap<Integer,Node> vis=new HashMap<>();
+        Node[] vis=new Node[101];
         return helper(vis,node);
     }
-    public Node helper(HashMap<Integer,Node> vis,Node node){
+    public Node helper(Node[] vis,Node node){
         Node cloneNode=new Node(node.val);
-        vis.put(node.val,cloneNode);
+    //    vis.put(node.val,cloneNode);
+        vis[node.val]=cloneNode;
         
         for(Node nbr:node.neighbors){
-            if(vis.containsKey(nbr.val)==true){
-                Node nbrClone=vis.get(nbr.val);
+            if(vis[nbr.val]!=null)
+            {
+                Node nbrClone=vis[nbr.val];
                 cloneNode.neighbors.add(nbrClone);
             }
             else{
