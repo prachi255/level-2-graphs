@@ -1,0 +1,44 @@
+ public int[] findOrder(int numCourses, int[][] prerequisites) {
+        //makin a graph
+        ArrayList<Integer>[] graph=new ArrayList[numCourses];
+        for(int i=0;i<numCourses;i++){
+            graph[i]=new ArrayList<>();
+        }
+        
+        for(int[] req:prerequisites){
+            graph[req[0]].add(req[1]);
+        }
+        
+        //making indegree array by prerequisites
+        int [] in=new int[numCourses];
+
+        for(int[] req:prerequisites){
+            in[req[1]]++;
+        }
+        
+        ArrayDeque<Integer> q=new ArrayDeque<>();
+        for(int i=0;i<in.length;i++){
+            if(in[i]==0){
+                q.add(i);
+            }
+        }
+     
+        int [] ans=new int[numCourses];
+        int z=numCourses-1;
+        
+        while(q.size()>0){
+            int x=q.remove();
+            ans[z--]=x;
+            for(int nbr:graph[x]){
+                in[nbr]--;
+                if(in[nbr]==0){
+                    q.add(nbr);
+                }
+            }
+        }
+       if(z!=-1){
+           return new int[0];
+       }
+       return (ans); 
+        
+    }
