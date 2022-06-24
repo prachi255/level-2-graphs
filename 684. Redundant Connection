@@ -1,23 +1,11 @@
 https://leetcode.com/problems/redundant-connection/
-
-   public class pair{
-        int r;
-        int c;
-        pair(int r,int c){
-            this.r=r;
-            this.c=c;
-        }
-    }
-    public int[] parent;
+  public int[] parent;
     public int[] rank;
     public int[] findRedundantConnection(int[][] edges) {
         //kind of kruskals
         //step 1. making pq{no need of pq bcz no as such criteria of weight}
-        ArrayDeque<pair> q=new ArrayDeque<>();
-        for(int i=0;i<edges.length;i++){
-            pair x=new pair(edges[i][0],edges[i][1]);
-            q.add(x);
-        }
+      //  ArrayDeque<pair> q=new ArrayDeque<>();
+      
         //step 2:filling par and rank array
         parent=new int[edges.length+1];
         rank=new int[edges.length+1];
@@ -29,13 +17,14 @@ https://leetcode.com/problems/redundant-connection/
         parent[0]=-1;
         rank[0]=-1;
         //step 3:taking one by one from queue
-        while(q.size()>0){
-            pair curr=q.remove();
-            int srclead=find(curr.r);
-            int destlead=find(curr.c);
+       for(int i=0;i<edges.length;i++){
+          int row=edges[i][0];
+           int col=edges[i][1];
+            int srclead=find(row);
+            int destlead=find(col);
             if(srclead==destlead){
-                ans[0]=curr.r;
-                ans[1]=curr.c;
+                ans[0]=row;
+                ans[1]=col;
                 return ans;
             }
             else{
