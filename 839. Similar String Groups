@@ -1,0 +1,84 @@
+https://leetcode.com/problems/similar-string-groups/
+
+
+ HashMap<String,String> parent;
+    HashMap<String,Integer> rank;
+    public int numSimilarGroups(String[] strs) {
+        parent=new HashMap<>();
+        rank=new HashMap<>();
+        
+        for(String x:strs){
+            parent.put(x,x);
+            rank.put(x,0);
+            
+        }
+        
+        //making same components
+for(int i=0;i<strs.length;i++){
+    for(int j=0;j<strs.length;j++){
+        String s1=strs[i];
+        String s2=strs[j];
+        
+        if(isSimilar(s1,s2)){
+            String par1=find(s1);
+            String par2=find(s2);
+            if(par1.equals(par2)==false){
+                union(par1,par2);
+            }
+        }
+    }
+}
+        int ans=0;
+        for(String x:parent.keySet()){
+            if(parent.get(x).equals(x)==true){
+                ans++;
+            }
+        }
+        return ans;
+        
+    }
+    
+    boolean isSimilar(String x,String y){
+        if(x.equals(y)){
+            return true;
+        }
+    
+        int d=0;
+        for(int i=0;i<x.length();i++){
+            if(x.charAt(i)!=y.charAt(i)){
+                d++;
+                if(d>2){
+                    return false;
+                }
+            }
+        }
+        
+        if(d==2){
+            return true;
+        }
+        return false;
+    }
+    String find(String x){
+        if(parent.get(x).equals(x)){
+            return x;
+            
+        }
+        else{
+            String ans=find(parent.get(x));
+            parent.put(x,ans);
+            return ans;
+        }
+    }
+    void union(String x,String y){
+        if(rank.get(x)==rank.get(y)){
+            parent.put(x,y);
+            rank.put(y,rank.get(y)+1);
+        }
+        else if(rank.get(x)<rank.get(y)){
+             parent.put(x,y);
+        }
+        else{
+              parent.put(y,x);
+        }
+    }
+    
