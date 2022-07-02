@@ -1,0 +1,25 @@
+  public int minSwaps(int nums[])
+    {int ans=0;
+        HashMap<Integer,Integer> pos=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            pos.put(nums[i],i);
+        }
+        Arrays.sort(nums);
+        boolean[]vis=new boolean[nums.length];
+        for(int i=0;i<nums.length;i++){
+            if(vis[i]==true || i==pos.get(nums[i])){
+                continue;
+            }
+            vis[i]=true;
+            int j=i;
+            int t=0;
+            do{
+                j=pos.get(nums[j]);
+                t++;
+                vis[j]=true;
+            }while(i!=j);
+            ans+=t-1;
+        }
+        
+        return ans;
+    }
